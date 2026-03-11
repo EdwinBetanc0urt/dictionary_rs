@@ -176,7 +176,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "W"
+											"action": "W"
 										}
 									},
 									{
@@ -192,7 +192,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "X"
+											"action": "X"
 										}
 									},
 									{
@@ -208,7 +208,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "S"
+											"action": "S"
 										}
 									},
 									{
@@ -224,7 +224,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "P"
+											"action": "P"
 										}
 									},
 									{
@@ -240,7 +240,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "R"
+											"action": "R"
 										}
 									},
 									{
@@ -256,7 +256,7 @@ impl MenuItem {
 								"must": [
 									{
 										"term": {
-											"action.keyword": "F"
+											"action": "F"
 										}
 									},
 									{
