@@ -44,7 +44,7 @@ jobs:
 
       - name: Copy files
         run: |
-          cp .env distributions/
+          cp env_template.env distributions/.env
           cp target/debug/server distributions/
 
       - name: Upload Binary Files
