@@ -3,9 +3,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{io::ErrorKind, io::Error};
 
-use crate::controller::opensearch::{find_from_dsl_body, IndexDocument};
+use crate::controller::opensearch_document::{IndexDocument, find_from_dsl_body};
 
 use super::{get_index_name, menu::MenuAction, role::Role};
+
 
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]

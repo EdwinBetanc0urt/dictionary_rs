@@ -6,6 +6,7 @@ use crate::models::{menu_item::menu_items_from_role, menu_tree::menu_tree_from_i
 
 use super::{menu_item::MenuItem, menu_tree::MenuTree, role::Role};
 
+
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]
 pub struct MenuDocument {

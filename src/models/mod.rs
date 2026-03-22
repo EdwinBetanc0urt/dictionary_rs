@@ -11,7 +11,9 @@ pub mod role;
 use serde::{Deserialize, Serialize};
 use salvo::prelude::*;
 use std::{io::ErrorKind, io::Error};
-use crate::controller::opensearch::exists_index;
+
+use crate::controller::opensearch_index::exists_index;
+
 
 #[derive(Deserialize, Serialize, Extractible, Debug, Clone)]
 pub struct Metadata {

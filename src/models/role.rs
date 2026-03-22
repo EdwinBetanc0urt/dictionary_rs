@@ -3,9 +3,10 @@ use salvo::prelude::*;
 use serde_json::json;
 use std::{io::ErrorKind, io::Error};
 
-use crate::controller::opensearch::{IndexDocument, get_by_id, exists_index};
+use crate::controller::{opensearch_document::{IndexDocument, get_by_id}, opensearch_index::exists_index};
 
 use super::client_index_only;
+
 
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]
