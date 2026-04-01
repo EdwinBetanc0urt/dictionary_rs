@@ -60,6 +60,24 @@ ADempiere (Java) ──Kafka──► dictionary-rs ──► OpenSearch (index)
 | Java gRPC server (direct) | ~1 020 ms |
 | dictionary-rs via OpenSearch | ~47 ms |
 
+### Updating to a New Image
+
+Updating `dictionary-rs` to a new version **does not require restarting ADempiere or clearing the
+OpenSearch cache**. Simply pull and restart the container:
+
+```bash
+docker compose pull dictionary-rs
+docker compose up -d --no-deps dictionary-rs
+```
+
+OpenSearch data lives in its own Docker volume and is unaffected by the restart. Kafka retains
+messages (default: 7 days), so `dictionary-rs` automatically processes any messages that arrived
+during the downtime on reconnect.
+
+**Exception:** if the new version's release notes mention a breaking change to the OpenSearch
+index structure, delete the affected indices first and let `dictionary-rs` re-index them from
+Kafka on startup. ADempiere itself does not need to be restarted in either case.
+
 ---
 
 A microservice that publish a Rest API based on [salvo.rs](https://salvo.rs/)
