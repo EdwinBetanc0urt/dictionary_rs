@@ -1,4 +1,67 @@
 # Microservice with Open Search gateway for ADempiere Dictionary using Rust
+
+## What this service does
+
+`dictionary-rs` is a high-performance caching layer for ADempiere's application dictionary. It
+intercepts dictionary change events published by ADempiere to Kafka, stores the resulting data in
+OpenSearch, and answers REST queries directly from the cache — bypassing the Java gRPC server for
+these lookups. This reduces response time from approximately 1 second (Java gRPC path) to
+approximately 47 ms.
+
+The service is written in Rust and exposes a REST API. It has no persistent state of its own:
+OpenSearch is its store, and Kafka is its change feed. If the OpenSearch index is lost or
+corrupted, ADempiere republishes the relevant topics and the cache is rebuilt automatically.
+
+### Data Flow
+
+```
+ADempiere (Java) ──Kafka──► dictionary-rs ──► OpenSearch (index)
+                                  ▲                   │
+       Frontend (Vue/ZK) ─────────┘◄──────────────────┘
+                               REST :7878
+```
+
+1. **Write path** (dictionary update): An ADempiere event (window change, new form, role update,
+   etc.) is published to one of the seven Kafka topics. `dictionary-rs` consumes the message,
+   transforms it, and indexes the result in OpenSearch.
+
+2. **Read path** (frontend request): The frontend queries `dictionary-rs` via REST. The service
+   reads from OpenSearch and returns the result without touching ADempiere.
+
+### Kafka Topics
+
+`dictionary-rs` subscribes to seven topics (configurable via `KAFKA_QUEUES`):
+
+| Topic       | ADempiere entity |
+|-------------|-----------------|
+| `browser`   | AD_Browse (Smart Browse) |
+| `form`      | AD_Form |
+| `process`   | AD_Process |
+| `window`    | AD_Window |
+| `menu_item` | AD_Menu (individual items) |
+| `menu_tree` | AD_TreeNodeMM (menu tree structure) |
+| `role`      | AD_Role |
+
+### REST API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/dictionary/windows[/{id}]` | Window definitions |
+| GET | `/api/dictionary/forms[/{id}]` | Form definitions |
+| GET | `/api/dictionary/processes[/{id}]` | Process definitions |
+| GET | `/api/dictionary/browsers[/{id}]` | Smart Browse definitions |
+| GET | `/api/security/menus` | Menu items (filterable by language, client, role, user, search text) |
+| GET | `/api/dictionary/system-info` | Service health / version info |
+
+### Performance
+
+| Path | Typical response time |
+|------|-----------------------|
+| Java gRPC server (direct) | ~1 020 ms |
+| dictionary-rs via OpenSearch | ~47 ms |
+
+---
+
 A microservice that publish a Rest API based on [salvo.rs](https://salvo.rs/)
 
 Hey! Note that the docker image was changed to [openls/dictionary-rs](https://hub.docker.com/r/openls/dictionary-rs)
