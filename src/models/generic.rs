@@ -2,7 +2,8 @@ use salvo::macros::Extractible;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::controller::opensearch::IndexDocument;
+use crate::controller::opensearch_document::IndexDocument;
+
 
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]

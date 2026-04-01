@@ -175,6 +175,11 @@ docker run -d -p 7878:7878 --name dictionary-rs -e KAFKA_ENABLED="N" -e KAFKA_QU
 Just build it and run
 
 ```Shell
+cp env_temlate.env .env
+nano .env
+```
+
+```Shell
 cargo build
 cargo run --bin server
 ```

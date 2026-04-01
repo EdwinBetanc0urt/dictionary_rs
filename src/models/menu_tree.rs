@@ -3,7 +3,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::{io::ErrorKind, io::Error};
 
-use crate::controller::opensearch::{IndexDocument, get_by_id};
+use crate::controller::opensearch_document::{IndexDocument, get_by_id};
+
 
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]

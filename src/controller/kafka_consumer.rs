@@ -9,6 +9,7 @@ use std::{io::Error, io::ErrorKind};
 
 pub struct CustomContext;
 
+
 impl ClientContext for CustomContext {}
 
 impl ConsumerContext for CustomContext {
@@ -119,7 +120,7 @@ pub fn create_consumer(
 // 	topics: &[&str],
 // 	config_overrides: &[(&str, &str)],
 // ) -> Result<LoggingConsumer, Error> {
-//     let mut consumer = create_consumer(brokers, group_id, topics)?;
+// 		let mut consumer = create_consumer(brokers, group_id, topics)?;
 // 	for (key, value) in config_overrides {
 // 		match consumer.set_config_option(key, value) {
 // 			Ok(_) => log::info!("Set Kafka consumer config option: {} = {}", key, value),
