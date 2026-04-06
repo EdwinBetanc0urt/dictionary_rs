@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{io::ErrorKind, io::Error};
 
-use crate::controller::opensearch_document::{IndexDocument, find_from_dsl_body};
+use crate::controller::opensearch_document::{DocumentProvider, IndexDocument, find_from_dsl_body};
 
 use super::{get_index_name, menu::MenuAction, role::Role};
 
@@ -12,6 +12,12 @@ use super::{get_index_name, menu::MenuAction, role::Role};
 #[salvo(extract(default_source(from = "body")))]
 pub struct MenuItemDocument {
     pub document: Option<MenuItem>
+}
+
+impl DocumentProvider for MenuItemDocument {
+	fn get_document(&self) -> Option<&dyn IndexDocument> {
+		self.document.as_ref().map(|d| d as &dyn IndexDocument)
+	}
 }
 
 #[derive(Serialize, Debug, Clone)]
