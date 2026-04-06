@@ -33,6 +33,7 @@ ENV \
 	KAFKA_HOST="0.0.0.0:9092" \
 	KAFKA_GROUP="default" \
 	OPENSEARCH_URL="http://localhost:9200" \
+    OPENSEARCH_CONNECTION_TIMEOUT_SECS="30" \
 	TZ="America/Caracas" \
 	VERSION=${BUILD_VERSION}
 
@@ -76,6 +77,7 @@ RUN cp /opt/apps/server/env_template.env /opt/apps/server/.env && \
 	sed -i "s|kafka_host|$KAFKA_HOST|g" /opt/apps/server/.env && \
 	sed -i "s|kafka_group|$KAFKA_GROUP|g" /opt/apps/server/.env && \
 	sed -i "s|opensearch_url|$OPENSEARCH_URL|g" /opt/apps/server/.env && \
+	sed -i "s|opensearch_connection_timeout_secs|$OPENSEARCH_CONNECTION_TIMEOUT_SECS|g" /opt/apps/server/.env && \
 	sed -i "s|1.0.0-dev|$VERSION|g" /opt/apps/server/.env
 
 
