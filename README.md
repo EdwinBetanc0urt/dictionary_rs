@@ -166,6 +166,9 @@ docker run -d -p 7878:7878 --name dictionary-rs -e KAFKA_ENABLED="N" -e KAFKA_QU
 - `KAFKA_QUEUES`: Apply for `KAFKA_ENABLED` flag, this can subscribe to many topics using space between topic. Default: `browser form process window menu_item menu_tree role`.
 - `KAFKA_HOST`: Kafka cluster and port for connect. Default: `0.0.0.0:29092`.
 - `KAFKA_GROUP`: Kafka group for subscription. Default: `default`.
+- `KAFKA_COMMIT_BATCH_SIZE`: Number of messages to process before committing offsets. Default: `100`.
+- `KAFKA_COMMIT_INTERVAL_SECS`: Time interval in seconds between offset commits. Default: `5`.
+- `KAFKA_CONCURRENCY_LIMIT`: Maximum number of messages processed in parallel. Default: `10`.
 - `OPENSEARCH_URL`: Open Search service host and port. Default `http://localhost:9200`.
 - `OPENSEARCH_CONNECTION_TIMEOUT_SECS`: Timeout for OpenSearch requests in seconds. Default: `30`.
 - `RUST_LOG`: The log level for service. Default `info`.

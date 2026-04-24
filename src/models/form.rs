@@ -3,13 +3,19 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::{io::ErrorKind, io::Error};
 
-use crate::{controller::opensearch_document::{IndexDocument, find, get_by_id}, models::get_index_name};
+use crate::{controller::opensearch_document::{DocumentProvider, IndexDocument, find, get_by_id}, models::get_index_name};
 
 
 #[derive(Deserialize, Extractible, Debug, Clone)]
 #[salvo(extract(default_source(from = "body")))]
 pub struct FormDocument {
 	pub document: Option<Form>
+}
+
+impl DocumentProvider for FormDocument {
+	fn get_document(&self) -> Option<&dyn IndexDocument> {
+		self.document.as_ref().map(|d| d as &dyn IndexDocument)
+	}
 }
 
 #[derive(Serialize, Debug, Clone)]

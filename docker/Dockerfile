@@ -32,6 +32,9 @@ ENV \
 	ALLOWED_ORIGIN="*" \
 	KAFKA_HOST="0.0.0.0:9092" \
 	KAFKA_GROUP="default" \
+	KAFKA_COMMIT_BATCH_SIZE="100" \
+	KAFKA_COMMIT_INTERVAL_SECS="5" \
+	KAFKA_CONCURRENCY_LIMIT="10" \
 	OPENSEARCH_URL="http://localhost:9200" \
     OPENSEARCH_CONNECTION_TIMEOUT_SECS="30" \
 	TZ="America/Caracas" \
@@ -76,6 +79,9 @@ RUN cp /opt/apps/server/env_template.env /opt/apps/server/.env && \
 	sed -i "s|kafka_queues|$KAFKA_QUEUES|g" /opt/apps/server/.env && \
 	sed -i "s|kafka_host|$KAFKA_HOST|g" /opt/apps/server/.env && \
 	sed -i "s|kafka_group|$KAFKA_GROUP|g" /opt/apps/server/.env && \
+	sed -i "s|KAFKA_COMMIT_BATCH_SIZE=100|KAFKA_COMMIT_BATCH_SIZE=$KAFKA_COMMIT_BATCH_SIZE|g" /opt/apps/server/.env && \
+	sed -i "s|KAFKA_COMMIT_INTERVAL_SECS=5|KAFKA_COMMIT_INTERVAL_SECS=$KAFKA_COMMIT_INTERVAL_SECS|g" /opt/apps/server/.env && \
+	sed -i "s|KAFKA_CONCURRENCY_LIMIT=10|KAFKA_CONCURRENCY_LIMIT=$KAFKA_CONCURRENCY_LIMIT|g" /opt/apps/server/.env && \
 	sed -i "s|opensearch_url|$OPENSEARCH_URL|g" /opt/apps/server/.env && \
 	sed -i "s|opensearch_connection_timeout_secs|$OPENSEARCH_CONNECTION_TIMEOUT_SECS|g" /opt/apps/server/.env && \
 	sed -i "s|1.0.0-dev|$VERSION|g" /opt/apps/server/.env

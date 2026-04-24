@@ -18,6 +18,11 @@ pub trait IndexDocument: Sync {
 	fn find(self: &Self, _search_value: String) -> serde_json::Value;
 }
 
+// Trait to extract the internal document from each model's wrappers
+pub trait DocumentProvider {
+	fn get_document(&self) -> Option<&dyn IndexDocument>;
+}
+
 
 pub async fn create(_document: &dyn IndexDocument) -> Result<bool, std::string::String> {
 	let client: OpenSearch = create_opensearch_client()?;
