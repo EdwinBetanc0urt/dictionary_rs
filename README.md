@@ -167,6 +167,7 @@ docker run -d -p 7878:7878 --name dictionary-rs -e KAFKA_ENABLED="N" -e KAFKA_QU
 - `KAFKA_HOST`: Kafka cluster and port for connect. Default: `0.0.0.0:29092`.
 - `KAFKA_GROUP`: Kafka group for subscription. Default: `default`.
 - `OPENSEARCH_URL`: Open Search service host and port. Default `http://localhost:9200`.
+- `OPENSEARCH_CONNECTION_TIMEOUT_SECS`: Timeout for OpenSearch requests in seconds. Default: `30`.
 - `RUST_LOG`: The log level for service. Default `info`.
 - `TZ`: (Time Zone) Indicates the time zone to set in the nginx-based container, the default value is `America/Caracas` (UTC -4:00).
 - `VERSION`: This is automatically set with the version of the image construction, it can be overwritten but is not recommended.
